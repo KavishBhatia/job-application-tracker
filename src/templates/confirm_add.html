@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Confirm application details</h2>
+
+    {% if parse_notice %}
+        <div class="notice">{{ parse_notice }}</div>
+    {% endif %}
+
+    <form method="post" action="/applications">
+        <label for="company">Company:</label><br>
+        <input type="text" id="company" name="company" value="{{ company }}" required><br>
+
+        <label for="role">Role:</label><br>
+        <input type="text" id="role" name="role" value="{{ role }}" required><br>
+
+        <label>Date applied:</label><br>
+        <input type="text" value="{{ today }}" disabled><br>
+
+        <label for="status">Status:</label><br>
+        <select id="status" name="status">
+            {% for status in statuses %}
+            <option value="{{ status.value }}" {% if status.value == default_status %}selected{% endif %}>{{ status.value }}</option>
+            {% endfor %}
+        </select><br>
+
+        <input type="hidden" name="job_post_url" value="{{ job_post_url }}">
+        <input type="hidden" name="source_text" value="{{ source_text }}">
+
+        <button type="submit">Save application</button>
+    </form>
+{% endblock %}

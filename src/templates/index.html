@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if parse_error %}
+        <div class="notice">{{ parse_error }}</div>
+    {% endif %}
+    {% if import_summary %}
+        <div class="summary">{{ import_summary }}</div>
+    {% endif %}
+
+    <section>
+        <h2>Log a new application</h2>
+        <form method="post" action="/applications/parse">
+            <label for="text">Describe the application in a sentence:</label><br>
+            <input type="text" id="text" name="text" size="60" placeholder="Applied at XYZ company for ABC role" required>
+            <br>
+            <label for="job_post_url">Job posting link (optional):</label><br>
+            <input type="url" id="job_post_url" name="job_post_url" size="60">
+            <br>
+            <button type="submit">Continue</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Export / Import</h2>
+        <p>
+            <a href="/export.csv">Export as CSV</a> |
+            <a href="/export.xlsx">Export as Excel</a>
+        </p>
+        <form method="post" action="/import" enctype="multipart/form-data">
+            <label for="file">Import a CSV or Excel file:</label>
+            <input type="file" id="file" name="file" accept=".csv,.xlsx" required>
+            <button type="submit">Import</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Applications</h2>
+        {% if applications %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                    <th>Job Posting</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.company }}</td>
+                    <td>{{ application.role }}</td>
+                    <td>{{ application.date_applied }}</td>
+                    <td>
+                        <form method="post" action="/applications/{{ application.id }}/status">
+                            <select name="status" onchange="this.form.submit()">
+                                {% for status in statuses %}
+                                <option value="{{ status.value }}" {% if status.value == application.status %}selected{% endif %}>{{ status.value }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        {% if application.job_post_url %}
+                        <a href="{{ application.job_post_url }}" target="_blank" rel="noopener">Link</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No applications logged yet.</p>
+        {% endif %}
+    </section>
+{% endblock %}

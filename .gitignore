@@ -1,1 +1,11 @@
 .claude/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Secrets & local data
+.env
+data/
