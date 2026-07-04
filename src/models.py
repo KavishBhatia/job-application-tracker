@@ -23,6 +23,9 @@ class ApplicationCreate(BaseModel):
     job_post_url: Optional[str] = None
     source_text: Optional[str] = None
     status: ApplicationStatus = ApplicationStatus.APPLIED
+    total_rounds: Optional[int] = None
+    current_round: Optional[int] = None
+    feedback: Optional[str] = None
 
 
 class StatusUpdate(BaseModel):
@@ -37,3 +40,6 @@ class ApplicationOut(BaseModel):
     status: ApplicationStatus
     job_post_url: Optional[str] = None
     source_text: Optional[str] = None
+    total_rounds: Optional[int] = None
+    current_round: Optional[int] = None
+    feedback: Optional[str] = None

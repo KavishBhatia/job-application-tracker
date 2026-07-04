@@ -8,6 +8,7 @@ from src.io_formats.csv_io import from_csv, to_csv
 from src.io_formats.excel_io import from_excel, to_excel
 from src.models import ApplicationStatus
 from src.templating import templates
+from src.utils import parse_optional_int
 
 router = APIRouter()
 
@@ -50,6 +51,9 @@ def import_applications(request: Request, file: UploadFile = File(...)):
         date_applied = (row.get("date_applied") or "").strip() or datetime.date.today().isoformat()
         job_post_url = (row.get("job_post_url") or "").strip() or None
         source_text = (row.get("source_text") or "").strip() or None
+        total_rounds = parse_optional_int(row.get("total_rounds"))
+        current_round = parse_optional_int(row.get("current_round"))
+        feedback = (str(row.get("feedback") or "")).strip() or None
 
         if not company or not role or status not in VALID_STATUSES:
             rejected += 1
@@ -66,6 +70,9 @@ def import_applications(request: Request, file: UploadFile = File(...)):
             status=status,
             job_post_url=job_post_url,
             source_text=source_text,
+            total_rounds=total_rounds,
+            current_round=current_round,
+            feedback=feedback,
         )
         imported += 1
 

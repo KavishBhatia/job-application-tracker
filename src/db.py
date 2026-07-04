@@ -13,9 +13,18 @@ CREATE TABLE IF NOT EXISTS applications (
     date_applied TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'Applied',
     job_post_url TEXT,
-    source_text TEXT
+    source_text TEXT,
+    total_rounds INTEGER,
+    current_round INTEGER,
+    feedback TEXT
 );
 """
+
+MIGRATION_COLUMNS = {
+    "total_rounds": "INTEGER",
+    "current_round": "INTEGER",
+    "feedback": "TEXT",
+}
 
 
 def get_connection() -> sqlite3.Connection:
@@ -29,6 +38,10 @@ def init_db() -> None:
     conn = get_connection()
     try:
         conn.execute(SCHEMA)
+        existing = {row["name"] for row in conn.execute("PRAGMA table_info(applications)")}
+        for column, coltype in MIGRATION_COLUMNS.items():
+            if column not in existing:
+                conn.execute(f"ALTER TABLE applications ADD COLUMN {column} {coltype}")
         conn.commit()
     finally:
         conn.close()
@@ -41,15 +54,31 @@ def _insert(
     status: str = "Applied",
     job_post_url: Optional[str] = None,
     source_text: Optional[str] = None,
+    total_rounds: Optional[int] = None,
+    current_round: Optional[int] = None,
+    feedback: Optional[str] = None,
 ) -> int:
     conn = get_connection()
     try:
         cursor = conn.execute(
             """
-            INSERT INTO applications (company, role, date_applied, status, job_post_url, source_text)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO applications (
+                company, role, date_applied, status, job_post_url, source_text,
+                total_rounds, current_round, feedback
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (company, role, date_applied, status, job_post_url, source_text),
+            (
+                company,
+                role,
+                date_applied,
+                status,
+                job_post_url,
+                source_text,
+                total_rounds,
+                current_round,
+                feedback,
+            ),
         )
         conn.commit()
         return cursor.lastrowid
@@ -63,6 +92,9 @@ def create_application(
     status: str = "Applied",
     job_post_url: Optional[str] = None,
     source_text: Optional[str] = None,
+    total_rounds: Optional[int] = None,
+    current_round: Optional[int] = None,
+    feedback: Optional[str] = None,
 ) -> int:
     today = datetime.date.today().isoformat()
     return _insert(
@@ -72,6 +104,9 @@ def create_application(
         status=status,
         job_post_url=job_post_url,
         source_text=source_text,
+        total_rounds=total_rounds,
+        current_round=current_round,
+        feedback=feedback,
     )
 
 
@@ -80,6 +115,27 @@ def list_applications() -> list[dict]:
     try:
         rows = conn.execute("SELECT * FROM applications ORDER BY id").fetchall()
         return [dict(row) for row in rows]
+    finally:
+        conn.close()
+
+
+def update_details(
+    application_id: int,
+    total_rounds: Optional[int],
+    current_round: Optional[int],
+    feedback: Optional[str],
+) -> None:
+    conn = get_connection()
+    try:
+        conn.execute(
+            """
+            UPDATE applications
+            SET total_rounds = ?, current_round = ?, feedback = ?
+            WHERE id = ?
+            """,
+            (total_rounds, current_round, feedback, application_id),
+        )
+        conn.commit()
     finally:
         conn.close()
 
@@ -120,6 +176,9 @@ def insert_imported_row(
     status: str = "Applied",
     job_post_url: Optional[str] = None,
     source_text: Optional[str] = None,
+    total_rounds: Optional[int] = None,
+    current_round: Optional[int] = None,
+    feedback: Optional[str] = None,
 ) -> int:
     return _insert(
         company=company,
@@ -128,4 +187,7 @@ def insert_imported_row(
         status=status,
         job_post_url=job_post_url,
         source_text=source_text,
+        total_rounds=total_rounds,
+        current_round=current_round,
+        feedback=feedback,
     )

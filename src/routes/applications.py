@@ -8,6 +8,7 @@ from src import db
 from src.llm.gemini_client import LLMApiError, LLMParsingError, extract_application
 from src.models import ApplicationStatus
 from src.templating import templates
+from src.utils import parse_optional_int
 
 logger = logging.getLogger("job_application_tracker")
 
@@ -77,6 +78,9 @@ def create_application(
     job_post_url: str = Form(""),
     source_text: str = Form(""),
     status: str = Form(ApplicationStatus.APPLIED.value),
+    total_rounds: str = Form(""),
+    current_round: str = Form(""),
+    feedback: str = Form(""),
 ):
     db.create_application(
         company=company.strip(),
@@ -84,6 +88,9 @@ def create_application(
         job_post_url=job_post_url.strip() or None,
         source_text=source_text.strip() or None,
         status=status,
+        total_rounds=parse_optional_int(total_rounds),
+        current_round=parse_optional_int(current_round),
+        feedback=feedback.strip() or None,
     )
     return RedirectResponse(url="/", status_code=303)
 
@@ -91,4 +98,20 @@ def create_application(
 @router.post("/applications/{application_id}/status")
 def update_application_status(application_id: int, status: ApplicationStatus = Form(...)):
     db.update_status(application_id, status.value)
+    return RedirectResponse(url="/", status_code=303)
+
+
+@router.post("/applications/{application_id}/details")
+def update_application_details(
+    application_id: int,
+    total_rounds: str = Form(""),
+    current_round: str = Form(""),
+    feedback: str = Form(""),
+):
+    db.update_details(
+        application_id,
+        total_rounds=parse_optional_int(total_rounds),
+        current_round=parse_optional_int(current_round),
+        feedback=feedback.strip() or None,
+    )
     return RedirectResponse(url="/", status_code=303)

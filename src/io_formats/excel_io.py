@@ -2,7 +2,18 @@ import io
 
 from openpyxl import Workbook, load_workbook
 
-COLUMNS = ["id", "company", "role", "date_applied", "status", "job_post_url", "source_text"]
+COLUMNS = [
+    "id",
+    "company",
+    "role",
+    "date_applied",
+    "status",
+    "job_post_url",
+    "source_text",
+    "total_rounds",
+    "current_round",
+    "feedback",
+]
 
 
 def to_excel(rows: list[dict]) -> bytes:

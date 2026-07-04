@@ -93,3 +93,49 @@ def test_import_row_with_invalid_status_rejected(client):
     assert response.status_code == 200
     assert "Rejected: 1" in response.text
     assert db.list_applications() == []
+
+
+def test_import_row_with_non_numeric_round_value_is_not_rejected(client):
+    csv_content = (
+        "company,role,date_applied,total_rounds,current_round,feedback\n"
+        "NewCo,New Role,2026-01-01,N/A,2,Went okay\n"
+    ).encode("utf-8")
+
+    response = client.post(
+        "/import",
+        files={"file": ("applications.csv", csv_content, "text/csv")},
+        follow_redirects=True,
+    )
+    assert response.status_code == 200
+    assert "Imported: 1" in response.text
+    apps = db.list_applications()
+    assert len(apps) == 1
+    assert apps[0]["total_rounds"] is None
+    assert apps[0]["current_round"] == 2
+    assert apps[0]["feedback"] == "Went okay"
+
+
+def test_export_then_import_round_trip_preserves_rounds_and_feedback(client):
+    client.post("/applications", data={"company": "Acme", "role": "Engineer"}, follow_redirects=True)
+    app_id = db.list_applications()[0]["id"]
+    client.post(
+        f"/applications/{app_id}/details",
+        data={"total_rounds": "4", "current_round": "2", "feedback": "Good progress"},
+        follow_redirects=True,
+    )
+
+    export_resp = client.get("/export.csv")
+    assert "4" in export_resp.text
+    assert "Good progress" in export_resp.text
+
+    import_resp = client.post(
+        "/import",
+        files={"file": ("applications.csv", export_resp.content, "text/csv")},
+        follow_redirects=True,
+    )
+    assert "Skipped as duplicates: 1" in import_resp.text
+    apps = db.list_applications()
+    assert len(apps) == 1
+    assert apps[0]["total_rounds"] == 4
+    assert apps[0]["current_round"] == 2
+    assert apps[0]["feedback"] == "Good progress"

@@ -24,6 +24,15 @@
             {% endfor %}
         </select><br>
 
+        <label for="total_rounds">Total rounds (optional):</label><br>
+        <input type="number" id="total_rounds" name="total_rounds" min="0"><br>
+
+        <label for="current_round">Current round (optional):</label><br>
+        <input type="number" id="current_round" name="current_round" min="0"><br>
+
+        <label for="feedback">Feedback (optional):</label><br>
+        <input type="text" id="feedback" name="feedback" size="60"><br>
+
         <input type="hidden" name="job_post_url" value="{{ job_post_url }}">
         <input type="hidden" name="source_text" value="{{ source_text }}">
 

@@ -283,7 +283,8 @@ button[type="submit"]:disabled {
 
 input[type="text"],
 input[type="url"],
-input[type="file"] {
+input[type="file"],
+input[type="number"] {
     font-family: inherit;
     font-size: var(--fs-base);
     color: var(--text-primary);
@@ -296,8 +297,29 @@ input[type="file"] {
     max-width: 420px;
 }
 
+.details-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+}
+
+.details-form input[type="number"] {
+    width: 70px;
+    max-width: 70px;
+    margin-bottom: 0;
+}
+
+.details-form input[type="text"] {
+    width: 140px;
+    max-width: 140px;
+    margin-bottom: 0;
+}
+
 input[type="text"]::placeholder,
-input[type="url"]::placeholder {
+input[type="url"]::placeholder,
+input[type="number"]::placeholder {
     color: var(--text-secondary);
 }
 
