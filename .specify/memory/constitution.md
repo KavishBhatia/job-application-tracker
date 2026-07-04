@@ -1,50 +1,85 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: (none) → 1.0.0
+- Modified principles: n/a (initial ratification)
+- Added sections:
+  - Core Principles: I. Simplicity & YAGNI, II. Test-First Development (NON-NEGOTIABLE)
+  - Technology Constraints
+  - Development Workflow
+  - Governance
+- Removed sections: Principle slots III–V from the template (not used; this project
+  defines 2 principles, not 5)
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md (Constitution Check gate is generic/dynamic, no edit needed)
+  - ✅ .specify/templates/spec-template.md (no constitution-specific references)
+  - ✅ .specify/templates/tasks-template.md (no constitution-specific references)
+  - ✅ .specify/templates/checklist-template.md (no constitution-specific references)
+  - n/a .specify/templates/commands/*.md (directory does not exist in this spec-kit version)
+- Follow-up TODOs: none
+-->
+
+# Job Application Tracker Constitution
+
+A personal hobby tool to track job applications, statuses, and follow-ups.
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Simplicity & YAGNI
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every feature starts with the simplest design that solves the problem. Speculative
+abstractions, unused configuration options, or infrastructure built for hypothetical
+future requirements are NOT permitted. Three similar lines of code are preferred over
+a premature abstraction. Any added complexity (a new dependency, service, or
+architectural layer) MUST be justified by a concrete, current need documented in the
+feature's plan — not a possible future one.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: This is a solo-maintained personal project. Complexity that isn't
+earning its keep today is pure maintenance debt tomorrow.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Test-First Development (NON-NEGOTIABLE)
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+Tests MUST be written before implementation code, MUST fail initially, and
+implementation MUST be written only to make them pass (Red-Green-Refactor). No
+feature is considered complete without an automated test exercising its behavior.
+Bug fixes MUST include a failing regression test written before the fix.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Test-first is the cheapest way to keep a personal project reliable
+without a team to catch regressions through review.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Technology Constraints
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+This project does not mandate a specific technology stack. Each feature's
+implementation plan selects the simplest tool or library that solves the problem,
+consistent with the Simplicity & YAGNI principle above, and records that choice in
+the feature's `plan.md` rather than in this document.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+
+As a solo-maintained personal project, formal multi-reviewer approval is not
+required. Every feature MUST still:
+
+1. Have a written spec (`spec.md`) before implementation begins.
+2. Have failing tests written before implementation, per Test-First Development.
+3. Pass its full test suite before being marked complete.
+
+The `/speckit-tasks` output MUST order test-writing tasks before their corresponding
+implementation tasks, reflecting principle II above.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes any conflicting ad-hoc practice. Amendments require:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. Editing this file with a clear rationale for the change.
+2. A version bump per the policy below.
+3. Propagating any resulting changes to `.specify/templates/*.md`.
+
+Versioning policy (semantic versioning):
+- **MAJOR**: Backward-incompatible governance/principle removals or redefinitions.
+- **MINOR**: A new principle or section added, or materially expanded guidance.
+- **PATCH**: Clarifications, wording, or typo fixes with no semantic change.
+
+Every `/speckit-plan` run MUST include a Constitution Check confirming the plan does
+not violate these principles. Unresolved violations MUST be documented and justified
+in the plan's Complexity Tracking section, or the plan MUST be simplified.
+
+**Version**: 1.0.0 | **Ratified**: 2026-07-04 | **Last Amended**: 2026-07-04
