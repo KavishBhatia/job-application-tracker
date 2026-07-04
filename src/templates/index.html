@@ -23,20 +23,21 @@
 
     <section>
         <h2>Export / Import</h2>
-        <p>
-            <a href="/export.csv">Export as CSV</a> |
-            <a href="/export.xlsx">Export as Excel</a>
-        </p>
+        <div class="export-actions">
+            <a class="button--secondary" href="/export.csv">Export as CSV</a>
+            <a class="button--secondary" href="/export.xlsx">Export as Excel</a>
+        </div>
         <form method="post" action="/import" enctype="multipart/form-data">
             <label for="file">Import a CSV or Excel file:</label>
             <input type="file" id="file" name="file" accept=".csv,.xlsx" required>
-            <button type="submit">Import</button>
+            <button type="submit" class="button--secondary">Import</button>
         </form>
     </section>
 
     <section>
         <h2>Applications</h2>
         {% if applications %}
+        <div class="table-scroll">
         <table>
             <thead>
                 <tr>
@@ -55,7 +56,7 @@
                     <td>{{ application.date_applied }}</td>
                     <td>
                         <form method="post" action="/applications/{{ application.id }}/status">
-                            <select name="status" onchange="this.form.submit()">
+                            <select name="status" data-status="{{ application.status }}" onchange="this.form.submit()">
                                 {% for status in statuses %}
                                 <option value="{{ status.value }}" {% if status.value == application.status %}selected{% endif %}>{{ status.value }}</option>
                                 {% endfor %}
@@ -71,6 +72,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
         {% else %}
         <p>No applications logged yet.</p>
         {% endif %}

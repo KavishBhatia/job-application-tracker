@@ -15,10 +15,10 @@
         <input type="text" id="role" name="role" value="{{ role }}" required><br>
 
         <label>Date applied:</label><br>
-        <input type="text" value="{{ today }}" disabled><br>
+        <span class="field-static">{{ today }}</span><br>
 
         <label for="status">Status:</label><br>
-        <select id="status" name="status">
+        <select id="status" name="status" data-status="{{ default_status }}" onchange="this.dataset.status = this.value">
             {% for status in statuses %}
             <option value="{{ status.value }}" {% if status.value == default_status %}selected{% endif %}>{{ status.value }}</option>
             {% endfor %}

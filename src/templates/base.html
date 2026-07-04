@@ -2,15 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function () {
+            var stored = localStorage.getItem("theme");
+            if (stored === "dark" || stored === "light") {
+                document.documentElement.dataset.theme = stored;
+            }
+        })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Job Application Tracker{% endblock %}</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
         <h1><a href="/">Job Application Tracker</a></h1>
+        <button type="button" id="theme-toggle">Dark mode</button>
     </header>
     <main>
         {% block content %}{% endblock %}
     </main>
+    <script>
+        (function () {
+            var button = document.getElementById("theme-toggle");
+            var systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+            function currentTheme() {
+                return document.documentElement.dataset.theme || (systemPrefersDark ? "dark" : "light");
+            }
+
+            function updateLabel() {
+                button.textContent = currentTheme() === "dark" ? "Light mode" : "Dark mode";
+                button.setAttribute("aria-pressed", String(currentTheme() === "dark"));
+            }
+
+            button.addEventListener("click", function () {
+                var next = currentTheme() === "dark" ? "light" : "dark";
+                document.documentElement.dataset.theme = next;
+                localStorage.setItem("theme", next);
+                updateLabel();
+            });
+
+            updateLabel();
+        })();
+    </script>
 </body>
 </html>
