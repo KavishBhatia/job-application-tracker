@@ -62,6 +62,18 @@ That's it — the app is now running locally. To stop it, go back to the termina
 
 Your applications are saved in a file at `data/job_applications.db`, which is created automatically the first time you run the app. Back it up like any other file if you want to keep a copy.
 
+### Even easier: a desktop launcher
+
+If you did the one-time setup above (steps 1–2), you don't have to open a terminal every time. There's a **"Job Application Tracker"** app on the Desktop — double-click it and it starts the server in the background and opens the app in your browser automatically. Clicking it again while the app is already running just reopens the browser tab, it won't start a second copy.
+
+It's built from `scripts/start_app.sh` (compiled into an app with macOS's `osacompile`, `scripts/start_app.applescript`), so it's specific to this Mac and this project folder — if you move the project or set it up on another machine, re-run:
+
+```bash
+osacompile -o ~/Desktop/"Job Application Tracker.app" scripts/start_app.applescript
+```
+
+Server logs for the launcher live at `data/server.log` if you ever need to see what happened after double-clicking.
+
 ## For developers
 
 - **Stack**: Python, [FastAPI](https://fastapi.tiangolo.com/) for the web server, [Jinja2](https://jinja.palletsprojects.com/) for HTML templates, plain SQLite for storage (no ORM), vanilla CSS/JS (no frontend framework or build step).
