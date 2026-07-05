@@ -26,6 +26,10 @@ async def lifespan(app: FastAPI):
     finally:
         if monitor_task:
             monitor_task.cancel()
+            try:
+                await monitor_task
+            except asyncio.CancelledError:
+                pass
 
 
 app = FastAPI(title="Job Application Tracker", lifespan=lifespan)
