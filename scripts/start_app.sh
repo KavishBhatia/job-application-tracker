@@ -11,7 +11,7 @@ PORT="8000"
 URL="http://${HOST}:${PORT}"
 LOG_FILE="${PROJECT_DIR}/data/server.log"
 
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || { osascript -e "display alert \"Job Application Tracker failed to start\" message \"Project directory not found: ${PROJECT_DIR}\""; exit 1; }
 mkdir -p data
 
 is_up() {
