@@ -70,6 +70,8 @@ It's built from `scripts/start_app.sh` (compiled into an app with macOS's `osaco
 
     osacompile -o ~/Desktop/"Job Application Tracker.app" scripts/start_app.applescript
 
+When launched this way, the app also **shuts itself down automatically once you close every browser tab/window it's open in** — no need to remember to stop it manually. It works by having the page quietly "check in" every few seconds while it's open; once those check-ins stop for about 20 seconds, the server exits on its own and frees up the port. Switching between the app's own pages doesn't count as closing it. This behavior only kicks in when started via the desktop launcher — running it manually with `uv run uvicorn ...` (e.g. while developing) behaves exactly as before and stays up until you press `Ctrl+C`.
+
 Server logs for the launcher live at `data/server.log` if you ever need to see what happened after double-clicking.
 
 ## For developers
