@@ -19,6 +19,11 @@ is_up() {
 }
 
 if ! is_up; then
+    if ! command -v "$UV_BIN" >/dev/null 2>&1; then
+        osascript -e "display alert \"Job Application Tracker failed to start\" message \"uv not found (tried '${UV_BIN}'). Install uv and/or adjust PATH/UV_BIN in scripts/start_app.sh.\""
+        exit 1
+    fi
+
     nohup "$UV_BIN" run uvicorn src.app:app --host "$HOST" --port "$PORT" > "$LOG_FILE" 2>&1 &
     disown
 
