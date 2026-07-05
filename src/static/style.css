@@ -10,6 +10,8 @@
     --border-default: oklch(78% 0.010 75);
     --border-strong: oklch(68% 0.012 75);
 
+    --heading-color: var(--text-secondary);
+
     --accent: oklch(58% 0.10 195);
     --accent-hover: oklch(52% 0.11 195);
     --accent-active: oklch(46% 0.11 195);
@@ -65,96 +67,100 @@
 
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
-        --bg-page: oklch(17% 0.010 75);
-        --bg-panel: oklch(22% 0.012 75);
-        --text-primary: oklch(92% 0.008 75);
-        --text-secondary: oklch(75% 0.010 75);
-        --text-muted: oklch(64% 0.010 75);
-        --border-subtle: oklch(30% 0.012 75);
-        --border-default: oklch(40% 0.014 75);
-        --border-strong: oklch(50% 0.016 75);
+        --bg-page: oklch(23% 0.014 70);
+        --bg-panel: oklch(29% 0.020 62);
+        --text-primary: oklch(93% 0.010 70);
+        --text-secondary: oklch(78% 0.014 70);
+        --text-muted: oklch(67% 0.012 70);
+        --border-subtle: oklch(37% 0.018 66);
+        --border-default: oklch(47% 0.020 66);
+        --border-strong: oklch(57% 0.022 66);
 
-        --accent: oklch(72% 0.09 195);
-        --accent-hover: oklch(78% 0.085 195);
-        --accent-active: oklch(66% 0.095 195);
+        --heading-color: oklch(76% 0.13 45);
+
+        --accent: oklch(74% 0.09 195);
+        --accent-hover: oklch(80% 0.085 195);
+        --accent-active: oklch(68% 0.095 195);
         --accent-contrast: oklch(14% 0.01 195);
-        --accent-focus-ring: oklch(72% 0.09 195 / 40%);
+        --accent-focus-ring: oklch(74% 0.09 195 / 40%);
 
-        --color-warning-bg: oklch(28% 0.05 85);
-        --color-warning-border: oklch(46% 0.09 85);
-        --color-warning-text: oklch(85% 0.09 85);
+        --color-warning-bg: oklch(34% 0.05 85);
+        --color-warning-border: oklch(51% 0.09 85);
+        --color-warning-text: oklch(87% 0.09 85);
 
-        --color-info-bg: oklch(26% 0.04 195);
-        --color-info-border: oklch(42% 0.07 195);
-        --color-info-text: oklch(82% 0.07 195);
+        --color-info-bg: oklch(32% 0.04 195);
+        --color-info-border: oklch(47% 0.07 195);
+        --color-info-text: oklch(84% 0.07 195);
 
-        --status-applied-text: oklch(78% 0.06 235);
-        --status-applied-bg: oklch(28% 0.05 235);
-        --status-applied-border: oklch(42% 0.07 235);
+        --status-applied-text: oklch(81% 0.09 235);
+        --status-applied-bg: oklch(35% 0.08 235);
+        --status-applied-border: oklch(49% 0.11 235);
 
-        --status-interviewing-text: oklch(80% 0.11 85);
-        --status-interviewing-bg: oklch(30% 0.07 85);
-        --status-interviewing-border: oklch(46% 0.10 85);
+        --status-interviewing-text: oklch(83% 0.15 85);
+        --status-interviewing-bg: oklch(37% 0.10 85);
+        --status-interviewing-border: oklch(53% 0.14 85);
 
-        --status-offer-text: oklch(78% 0.13 150);
-        --status-offer-bg: oklch(27% 0.06 150);
-        --status-offer-border: oklch(42% 0.09 150);
+        --status-offer-text: oklch(81% 0.17 150);
+        --status-offer-bg: oklch(34% 0.09 150);
+        --status-offer-border: oklch(49% 0.13 150);
 
-        --status-rejected-text: oklch(78% 0.12 25);
-        --status-rejected-bg: oklch(29% 0.06 25);
-        --status-rejected-border: oklch(45% 0.09 25);
+        --status-rejected-text: oklch(81% 0.15 25);
+        --status-rejected-bg: oklch(36% 0.09 25);
+        --status-rejected-border: oklch(52% 0.13 25);
 
-        --status-withdrawn-text: oklch(70% 0.010 75);
-        --status-withdrawn-bg: oklch(26% 0.010 75);
-        --status-withdrawn-border: oklch(40% 0.012 75);
+        --status-withdrawn-text: oklch(73% 0.010 70);
+        --status-withdrawn-bg: oklch(32% 0.012 70);
+        --status-withdrawn-border: oklch(45% 0.014 70);
 
         --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23aaa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
 }
 
 :root[data-theme="dark"] {
-    --bg-page: oklch(17% 0.010 75);
-    --bg-panel: oklch(22% 0.012 75);
-    --text-primary: oklch(92% 0.008 75);
-    --text-secondary: oklch(75% 0.010 75);
-    --text-muted: oklch(64% 0.010 75);
-    --border-subtle: oklch(30% 0.012 75);
-    --border-default: oklch(40% 0.014 75);
-    --border-strong: oklch(50% 0.016 75);
+    --bg-page: oklch(23% 0.014 70);
+    --bg-panel: oklch(29% 0.020 62);
+    --text-primary: oklch(93% 0.010 70);
+    --text-secondary: oklch(78% 0.014 70);
+    --text-muted: oklch(67% 0.012 70);
+    --border-subtle: oklch(37% 0.018 66);
+    --border-default: oklch(47% 0.020 66);
+    --border-strong: oklch(57% 0.022 66);
 
-    --accent: oklch(72% 0.09 195);
-    --accent-hover: oklch(78% 0.085 195);
-    --accent-active: oklch(66% 0.095 195);
+    --heading-color: oklch(76% 0.13 45);
+
+    --accent: oklch(74% 0.09 195);
+    --accent-hover: oklch(80% 0.085 195);
+    --accent-active: oklch(68% 0.095 195);
     --accent-contrast: oklch(14% 0.01 195);
-    --accent-focus-ring: oklch(72% 0.09 195 / 40%);
+    --accent-focus-ring: oklch(74% 0.09 195 / 40%);
 
-    --color-warning-bg: oklch(28% 0.05 85);
-    --color-warning-border: oklch(46% 0.09 85);
-    --color-warning-text: oklch(85% 0.09 85);
+    --color-warning-bg: oklch(34% 0.05 85);
+    --color-warning-border: oklch(51% 0.09 85);
+    --color-warning-text: oklch(87% 0.09 85);
 
-    --color-info-bg: oklch(26% 0.04 195);
-    --color-info-border: oklch(42% 0.07 195);
-    --color-info-text: oklch(82% 0.07 195);
+    --color-info-bg: oklch(32% 0.04 195);
+    --color-info-border: oklch(47% 0.07 195);
+    --color-info-text: oklch(84% 0.07 195);
 
-    --status-applied-text: oklch(78% 0.06 235);
-    --status-applied-bg: oklch(28% 0.05 235);
-    --status-applied-border: oklch(42% 0.07 235);
+    --status-applied-text: oklch(81% 0.09 235);
+    --status-applied-bg: oklch(35% 0.08 235);
+    --status-applied-border: oklch(49% 0.11 235);
 
-    --status-interviewing-text: oklch(80% 0.11 85);
-    --status-interviewing-bg: oklch(30% 0.07 85);
-    --status-interviewing-border: oklch(46% 0.10 85);
+    --status-interviewing-text: oklch(83% 0.15 85);
+    --status-interviewing-bg: oklch(37% 0.10 85);
+    --status-interviewing-border: oklch(53% 0.14 85);
 
-    --status-offer-text: oklch(78% 0.13 150);
-    --status-offer-bg: oklch(27% 0.06 150);
-    --status-offer-border: oklch(42% 0.09 150);
+    --status-offer-text: oklch(81% 0.17 150);
+    --status-offer-bg: oklch(34% 0.09 150);
+    --status-offer-border: oklch(49% 0.13 150);
 
-    --status-rejected-text: oklch(78% 0.12 25);
-    --status-rejected-bg: oklch(29% 0.06 25);
-    --status-rejected-border: oklch(45% 0.09 25);
+    --status-rejected-text: oklch(81% 0.15 25);
+    --status-rejected-bg: oklch(36% 0.09 25);
+    --status-rejected-border: oklch(52% 0.13 25);
 
-    --status-withdrawn-text: oklch(70% 0.010 75);
-    --status-withdrawn-bg: oklch(26% 0.010 75);
-    --status-withdrawn-border: oklch(40% 0.012 75);
+    --status-withdrawn-text: oklch(73% 0.010 70);
+    --status-withdrawn-bg: oklch(32% 0.012 70);
+    --status-withdrawn-border: oklch(45% 0.014 70);
 
     --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23aaa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
@@ -205,12 +211,32 @@ header h1 a {
     text-decoration: none;
 }
 
+nav {
+    display: flex;
+    gap: var(--space-4);
+}
+
+nav a {
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: var(--text-primary);
+}
+
+nav a.active {
+    color: var(--accent);
+}
+
 /* ===== Headings ===== */
 
 h2 {
     font-size: var(--fs-lg);
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--heading-color);
     margin: 0 0 var(--space-3);
 }
 
@@ -446,6 +472,18 @@ tbody tr {
 
 tbody tr:hover {
     background: var(--bg-panel);
+}
+
+.app-row {
+    cursor: pointer;
+}
+
+.app-detail td {
+    background: var(--bg-panel);
+}
+
+.app-detail form {
+    margin: 0;
 }
 
 /* ===== Notice / summary banners ===== */

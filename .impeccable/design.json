@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-05T00:00:00Z",
+  "title": "Design System: Job Application Tracker",
+  "extensions": {
+    "colorMeta": {
+      "teal-signal": {
+        "role": "primary",
+        "displayName": "Teal Signal",
+        "canonical": "oklch(58% 0.10 195)",
+        "tonalRamp": [
+          "oklch(15% 0.03 195)",
+          "oklch(26% 0.05 195)",
+          "oklch(37% 0.07 195)",
+          "oklch(48% 0.09 195)",
+          "oklch(58% 0.10 195)",
+          "oklch(68% 0.09 195)",
+          "oklch(80% 0.07 195)",
+          "oklch(92% 0.03 195)"
+        ]
+      },
+      "teal-signal-dark": {
+        "role": "primary",
+        "displayName": "Teal Signal (Dark Mode)",
+        "canonical": "oklch(74% 0.09 195)",
+        "tonalRamp": [
+          "oklch(15% 0.03 195)",
+          "oklch(26% 0.05 195)",
+          "oklch(37% 0.07 195)",
+          "oklch(48% 0.09 195)",
+          "oklch(58% 0.10 195)",
+          "oklch(68% 0.09 195)",
+          "oklch(74% 0.09 195)",
+          "oklch(90% 0.04 195)"
+        ]
+      },
+      "ink-charcoal": {
+        "role": "neutral",
+        "displayName": "Ink Charcoal",
+        "canonical": "oklch(28% 0.012 75)",
+        "tonalRamp": [
+          "oklch(15% 0.008 75)",
+          "oklch(28% 0.012 75)",
+          "oklch(40% 0.012 75)",
+          "oklch(52% 0.010 75)",
+          "oklch(64% 0.010 75)",
+          "oklch(78% 0.010 75)",
+          "oklch(90% 0.006 75)",
+          "oklch(98% 0.004 75)"
+        ]
+      },
+      "umber-night": {
+        "role": "neutral",
+        "displayName": "Umber Night",
+        "canonical": "oklch(23% 0.014 70)",
+        "tonalRamp": [
+          "oklch(15% 0.010 70)",
+          "oklch(23% 0.014 70)",
+          "oklch(29% 0.020 62)",
+          "oklch(37% 0.018 66)",
+          "oklch(47% 0.020 66)",
+          "oklch(57% 0.022 66)",
+          "oklch(67% 0.012 70)",
+          "oklch(78% 0.014 70)"
+        ]
+      },
+      "ember-coral": {
+        "role": "secondary",
+        "displayName": "Ember Coral",
+        "canonical": "oklch(76% 0.13 45)",
+        "tonalRamp": [
+          "oklch(20% 0.05 45)",
+          "oklch(32% 0.08 45)",
+          "oklch(44% 0.11 45)",
+          "oklch(56% 0.13 45)",
+          "oklch(66% 0.14 45)",
+          "oklch(76% 0.13 45)",
+          "oklch(86% 0.09 45)",
+          "oklch(94% 0.04 45)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The one-time-per-page brand title in the header." },
+      "title": { "displayName": "Title", "purpose": "Section headings within a page (Log a new application, Applications, Export / Import)." },
+      "body": { "displayName": "Body", "purpose": "All form inputs, table content, and paragraph text." },
+      "label": { "displayName": "Label", "purpose": "Navigation links, table headers, button text, the status select." }
+    },
+    "shadows": [
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 3px var(--accent-focus-ring)",
+        "purpose": "The only shadow-adjacent effect in the system. Appears exclusively on keyboard/mouse focus of inputs, selects, buttons, and links; never used for elevation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "150ms ease-out",
+        "purpose": "Standard transition for background-color, border-color, and color changes on buttons, selects, and table rows. Never applied to layout properties (width, height, margin, padding)."
+      }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single filled-background action per page (Continue, Save application).",
+      "html": "<button class=\"ds-btn-primary\" type=\"submit\">Continue</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; font-family: inherit; font-size: 1rem; font-weight: 600; padding: 8px 16px; border-radius: 6px; border: 1px solid transparent; cursor: pointer; background: var(--accent, oklch(58% 0.10 195)); color: var(--accent-contrast, oklch(99% 0.005 195)); transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out; } .ds-btn-primary:hover { background: var(--accent-hover, oklch(52% 0.11 195)); } .ds-btn-primary:active { background: var(--accent-active, oklch(46% 0.11 195)); } .ds-btn-primary:focus-visible { outline: none; border-color: var(--accent, oklch(58% 0.10 195)); box-shadow: 0 0 0 3px var(--accent-focus-ring, oklch(58% 0.10 195 / 35%)); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Every non-primary action: Save on a row, Import, the theme toggle.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Save</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; font-family: inherit; font-size: 1rem; font-weight: 600; padding: 8px 16px; border-radius: 6px; cursor: pointer; background: transparent; color: var(--text-primary, oklch(28% 0.012 75)); border: 1px solid var(--border-default, oklch(78% 0.010 75)); transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out; } .ds-btn-secondary:hover { background: var(--bg-page, oklch(98% 0.004 75)); } .ds-btn-secondary:focus-visible { outline: none; border-color: var(--accent, oklch(58% 0.10 195)); box-shadow: 0 0 0 3px var(--accent-focus-ring, oklch(58% 0.10 195 / 35%)); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "The standard field style for text, url, date, and number inputs.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Applied at XYZ company for ABC role\">",
+      "css": ".ds-input { font-family: inherit; font-size: 1rem; color: var(--text-primary, oklch(28% 0.012 75)); background: var(--bg-page, oklch(98% 0.004 75)); border: 1px solid var(--border-default, oklch(78% 0.010 75)); border-radius: 6px; padding: 8px 12px; width: 100%; max-width: 420px; } .ds-input::placeholder { color: var(--text-secondary, oklch(46% 0.012 75)); } .ds-input:focus-visible { outline: none; border-color: var(--accent, oklch(58% 0.10 195)); box-shadow: 0 0 0 3px var(--accent-focus-ring, oklch(58% 0.10 195 / 35%)); }"
+    },
+    {
+      "name": "Status Select",
+      "kind": "custom",
+      "refersTo": "status-pill",
+      "description": "Signature component. Custom-styled select whose background/text/border shift by status value; the most colorful element on the page by design.",
+      "html": "<select class=\"ds-status ds-status--interviewing\"><option>Applied</option><option selected>Interviewing</option><option>Offer</option><option>Rejected</option><option>Withdrawn</option></select>",
+      "css": ".ds-status { appearance: none; font-family: inherit; font-size: 0.889rem; font-weight: 600; border-radius: 6px; padding: 8px 32px 8px 12px; cursor: pointer; background-repeat: no-repeat; background-position: right 8px center; background-size: 10px 7px; background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\"); transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out; } .ds-status--interviewing { color: oklch(46% 0.11 85); background-color: oklch(93% 0.045 85); border: 1px solid oklch(78% 0.09 85); } .ds-status:focus-visible { outline: none; box-shadow: 0 0 0 3px oklch(58% 0.10 195 / 35%); }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Header nav links; the active-page link uses the accent color, the second of the accent's two reserved roles.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-link\">Add Application</a><a href=\"#\" class=\"ds-nav-link ds-nav-link--active\" aria-current=\"page\">Applications</a><a href=\"#\" class=\"ds-nav-link\">Import / Export</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 16px; } .ds-nav-link { color: var(--text-secondary, oklch(46% 0.012 75)); font-size: 0.889rem; font-weight: 600; text-decoration: none; } .ds-nav-link:hover { color: var(--text-primary, oklch(28% 0.012 75)); } .ds-nav-link--active { color: var(--accent, oklch(58% 0.10 195)); }"
+    },
+    {
+      "name": "Table Row (Collapsed)",
+      "kind": "custom",
+      "refersTo": "table-row",
+      "description": "The default collapsed row on the Applications page: only the four most identifying fields, hover tints the full row.",
+      "html": "<table class=\"ds-table\"><tbody><tr class=\"ds-row\"><td>Acme Corp</td><td>Backend Engineer</td><td>2026-07-05</td><td><select class=\"ds-status ds-status--applied\"><option selected>Applied</option></select></td></tr></tbody></table>",
+      "css": ".ds-table { width: 100%; border-collapse: collapse; } .ds-row td { padding: 12px; font-size: 0.889rem; color: var(--text-primary, oklch(28% 0.012 75)); border-bottom: 1px solid var(--border-subtle, oklch(90% 0.006 75)); } .ds-row { cursor: pointer; transition: background-color 150ms ease-out; } .ds-row:hover { background: var(--bg-panel, oklch(95.5% 0.007 75)); } .ds-status--applied { color: oklch(42% 0.045 235); background-color: oklch(94% 0.018 235); border: 1px solid oklch(80% 0.035 235); appearance: none; font-family: inherit; font-size: 0.889rem; font-weight: 600; border-radius: 6px; padding: 6px 28px 6px 10px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Warm Ledger",
+    "overview": "This is a well-worn accounting ledger, not a SaaS dashboard: a single person's private record of applications, kept in warm paper tones rather than clinical engineering-tool gray. The system explicitly rejects flat, monochromatic admin-panel dark mode (a single desaturated gray scale with one timid accent) and anything that reads as lifeless or generic, per this project's PRODUCT.md anti-references. Both light and dark themes are tinted toward the same warm neutral hue family (never a pure gray, never pure black or white), so switching themes never feels like switching products, only like switching the ambient light in the room the ledger sits in. One teal accent (teal-signal) carries every primary action and the current navigation selection across both themes; a warm coral heading accent (ember-coral) and richer, more saturated status colors give dark mode extra life without turning the system into a rainbow.",
+    "keyCharacteristics": [
+      "Warm-tinted neutrals in every surface, text, and border color, never a flat desaturated gray.",
+      "One consistent teal accent for actions and current selection, in both themes.",
+      "Five named status colors that carry meaning through color and text together, never color alone.",
+      "Flat by default: no shadows, no elevation layering; depth comes from background tone shifts only.",
+      "Dark mode is warmer and more saturated than a naive invert-the-lightness dark mode would produce."
+    ],
+    "rules": [
+      { "name": "The Text-Plus-Color Rule", "body": "Status is never conveyed by color alone. The status control is a select showing the status name as text; color reinforces it, it does not replace it.", "section": "colors" },
+      { "name": "The Warmth Asymmetry Rule", "body": "Dark mode is allowed to be more colorful than light mode (the ember-coral heading accent and richer status chroma exist only in dark mode). A dark surface can carry more saturated color before it looks garish, and dark mode is where too-flat was the original complaint this palette was built to fix. Do not force light mode to adopt the same heading accent.", "section": "colors" },
+      { "name": "The One Weight-Step Rule", "body": "Only two font weights exist in the whole system: 400 (body) and 600-700 (everything else that needs emphasis). Do not introduce a 500 or 800 weight.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "No card ever gets a drop shadow to indicate it is raised. If something needs to stand apart from the page, give it the panel background color, not a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do tint every neutral toward the warm hue family already established. Never introduce a pure, untinted gray.",
+      "Do keep the teal accent to its two reserved jobs: primary actions and current-selection indicators.",
+      "Do let dark mode be more saturated than light mode when it serves legibility or life.",
+      "Do convey status through text plus color together, never color alone.",
+      "Do prefer a background-tint hover treatment for new interactive elements, in keeping with the tactile-and-friendly component philosophy.",
+      "Do keep number inputs free of native spinner arrows, matching the existing pattern."
+    ],
+    "donts": [
+      "Don't build a flat, monochromatic SaaS admin panel gray dark mode: a single desaturated gray scale plus one timid accent.",
+      "Don't use border-left or border-right greater than 1px as a colored accent stripe on any row, card, or callout.",
+      "Don't add a drop shadow to indicate elevation. Use the panel background color instead.",
+      "Don't introduce a new accent hue for a secondary action. Secondary actions are transparent/ghost buttons with the existing border tokens.",
+      "Don't derive a dark-mode color by mechanically inverting a light-mode color's lightness.",
+      "Don't load a custom webfont. The native OS font stack is intentional."
+    ]
+  }
+}

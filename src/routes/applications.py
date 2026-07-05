@@ -17,12 +17,16 @@ router = APIRouter()
 
 @router.get("/")
 def index(request: Request):
-    applications = db.list_applications()
+    return templates.TemplateResponse(request, "add.html", {})
+
+
+@router.get("/applications")
+def applications_page(request: Request):
     return templates.TemplateResponse(
         request,
-        "index.html",
+        "applications.html",
         {
-            "applications": applications,
+            "applications": db.list_applications(),
             "statuses": list(ApplicationStatus),
         },
     )
@@ -36,10 +40,8 @@ def parse_application(request: Request, text: str = Form(...), job_post_url: str
     if not text:
         return templates.TemplateResponse(
             request,
-            "index.html",
+            "add.html",
             {
-                "applications": db.list_applications(),
-                "statuses": list(ApplicationStatus),
                 "parse_error": "Please enter application details before saving.",
             },
         )
@@ -94,13 +96,13 @@ def create_application(
         feedback=feedback.strip() or None,
         date_applied=date_applied.strip() or None,
     )
-    return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/applications", status_code=303)
 
 
 @router.post("/applications/{application_id}/status")
 def update_application_status(application_id: int, status: ApplicationStatus = Form(...)):
     db.update_status(application_id, status.value)
-    return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/applications", status_code=303)
 
 
 @router.post("/applications/{application_id}/details")
@@ -116,4 +118,4 @@ def update_application_details(
         current_round=parse_optional_int(current_round),
         feedback=feedback.strip() or None,
     )
-    return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/applications", status_code=303)

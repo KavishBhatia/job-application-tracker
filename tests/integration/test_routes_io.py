@@ -1,6 +1,15 @@
 from src import db
 
 
+def test_import_export_page_shows_controls_only(client):
+    response = client.get("/import-export")
+    assert response.status_code == 200
+    assert "Export as CSV" in response.text
+    assert 'id="file"' in response.text
+    assert 'id="text"' not in response.text
+    assert "<table" not in response.text
+
+
 def test_export_csv_and_reimport_skips_duplicates(client):
     client.post("/applications", data={"company": "Acme", "role": "Engineer"}, follow_redirects=True)
     export_resp = client.get("/export.csv")

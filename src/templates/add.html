@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if parse_error %}
+        <div class="notice">{{ parse_error }}</div>
+    {% endif %}
+
+    <section>
+        <h2>Log a new application</h2>
+        <form method="post" action="/applications/parse">
+            <label for="text">Describe the application in a sentence:</label><br>
+            <input type="text" id="text" name="text" size="60" placeholder="Applied at XYZ company for ABC role" required>
+            <br>
+            <label for="job_post_url">Job posting link (optional):</label><br>
+            <input type="url" id="job_post_url" name="job_post_url" size="60">
+            <br>
+            <button type="submit">Continue</button>
+        </form>
+    </section>
+{% endblock %}

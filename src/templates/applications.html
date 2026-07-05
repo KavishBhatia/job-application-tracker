@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section>
+        <h2>Applications</h2>
+        {% if applications %}
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr class="app-row" data-detail-id="app-detail-{{ application.id }}">
+                    <td>{{ application.company }}</td>
+                    <td>{{ application.role }}</td>
+                    <td>{{ application.date_applied }}</td>
+                    <td>
+                        <form method="post" action="/applications/{{ application.id }}/status">
+                            <select name="status" data-status="{{ application.status }}" onchange="this.form.submit()">
+                                {% for status in statuses %}
+                                <option value="{{ status.value }}" {% if status.value == application.status %}selected{% endif %}>{{ status.value }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                <tr id="app-detail-{{ application.id }}" class="app-detail" hidden>
+                    <td colspan="4">
+                        {% if application.job_post_url %}
+                        <p><a href="{{ application.job_post_url }}" target="_blank" rel="noopener">Job posting link</a></p>
+                        {% endif %}
+                        <form method="post" action="/applications/{{ application.id }}/details">
+                            <label for="total_rounds-{{ application.id }}">Total rounds</label><br>
+                            <input type="number" id="total_rounds-{{ application.id }}" name="total_rounds" min="0" value="{{ application.total_rounds if application.total_rounds is not none else '' }}"><br>
+                            <label for="current_round-{{ application.id }}">Current round</label><br>
+                            <input type="number" id="current_round-{{ application.id }}" name="current_round" min="0" value="{{ application.current_round if application.current_round is not none else '' }}"><br>
+                            <label for="feedback-{{ application.id }}">Feedback</label><br>
+                            <div class="feedback-cell">
+                                <input type="text" id="feedback-{{ application.id }}" name="feedback" value="{{ application.feedback or '' }}">
+                                <button type="submit" class="button--secondary">Save</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        {% else %}
+        <p>No applications logged yet.</p>
+        {% endif %}
+    </section>
+    <script>
+        (function () {
+            document.querySelectorAll(".app-row").forEach(function (row) {
+                row.addEventListener("click", function (event) {
+                    if (event.target.closest("select")) {
+                        return;
+                    }
+                    var detail = document.getElementById(row.dataset.detailId);
+                    if (detail) {
+                        detail.hidden = !detail.hidden;
+                    }
+                });
+            });
+        })();
+    </script>
+{% endblock %}

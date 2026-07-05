@@ -17,6 +17,11 @@
 <body>
     <header>
         <h1><a href="/">Job Application Tracker</a></h1>
+        <nav>
+            <a href="/" {% if request.url.path == "/" %}class="active" aria-current="page"{% endif %}>Add Application</a>
+            <a href="/applications" {% if request.url.path == "/applications" %}class="active" aria-current="page"{% endif %}>Applications</a>
+            <a href="/import-export" {% if request.url.path == "/import-export" %}class="active" aria-current="page"{% endif %}>Import / Export</a>
+        </nav>
         <button type="button" id="theme-toggle">Dark mode</button>
     </header>
     <main>

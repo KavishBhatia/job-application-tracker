@@ -15,6 +15,11 @@ router = APIRouter()
 VALID_STATUSES = {status.value for status in ApplicationStatus}
 
 
+@router.get("/import-export")
+def import_export_page(request: Request):
+    return templates.TemplateResponse(request, "import_export.html", {})
+
+
 @router.get("/export.csv")
 def export_csv():
     content = to_csv(db.list_applications())
@@ -80,10 +85,8 @@ def import_applications(request: Request, file: UploadFile = File(...)):
 
     return templates.TemplateResponse(
         request,
-        "index.html",
+        "import_export.html",
         {
-            "applications": db.list_applications(),
-            "statuses": list(ApplicationStatus),
             "import_summary": summary,
         },
     )
