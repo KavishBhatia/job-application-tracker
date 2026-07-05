@@ -62,6 +62,18 @@ That's it — the app is now running locally. To stop it, go back to the termina
 
 Your applications are saved in a file at `data/job_applications.db`, which is created automatically the first time you run the app. Back it up like any other file if you want to keep a copy.
 
+### Even easier: a desktop launcher
+
+If you did the one-time setup above (steps 1–2), you don't have to open a terminal every time. You can create a **"Job Application Tracker"** launcher app on the Desktop — double-click it and it starts the server in the background and opens the app in your browser automatically. Clicking it again while the app is already running just reopens the browser tab, it won't start a second copy.
+
+It's built from `scripts/start_app.sh` (compiled into an app with macOS's `osacompile` + `scripts/start_app.applescript`). Before compiling, update the script path inside `scripts/start_app.applescript` to match where you cloned this repo, then run:
+
+    osacompile -o ~/Desktop/"Job Application Tracker.app" scripts/start_app.applescript
+
+When launched this way, the app also **shuts itself down automatically once you close every browser tab/window it's open in** — no need to remember to stop it manually. It works by having the page quietly "check in" every few seconds while it's open; once those check-ins stop for about 20 seconds, the server exits on its own and frees up the port. Switching between the app's own pages doesn't count as closing it. This behavior only kicks in when started via the desktop launcher — running it manually with `uv run uvicorn ...` (e.g. while developing) behaves exactly as before and stays up until you press `Ctrl+C`.
+
+Server logs for the launcher live at `data/server.log` if you ever need to see what happened after double-clicking.
+
 ## For developers
 
 - **Stack**: Python, [FastAPI](https://fastapi.tiangolo.com/) for the web server, [Jinja2](https://jinja.palletsprojects.com/) for HTML templates, plain SQLite for storage (no ORM), vanilla CSS/JS (no frontend framework or build step).

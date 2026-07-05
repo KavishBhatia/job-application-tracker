@@ -51,5 +51,16 @@
             updateLabel();
         })();
     </script>
+    {% if auto_shutdown_enabled %}
+    <script>
+        (function () {
+            function ping() {
+                fetch("/heartbeat", { method: "POST", keepalive: true }).catch(function () {});
+            }
+            ping();
+            setInterval(ping, 5000);
+        })();
+    </script>
+    {% endif %}
 </body>
 </html>
