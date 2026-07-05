@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR="/Users/kavishbhatia/hobby/job_application_tracker"
-UV_BIN="/opt/homebrew/bin/uv"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+UV_BIN="${UV_BIN:-uv}"
 HOST="127.0.0.1"
 PORT="8000"
 URL="http://${HOST}:${PORT}"
