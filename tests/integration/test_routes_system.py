@@ -6,8 +6,8 @@ def test_heartbeat_endpoint_returns_no_content(client):
     assert response.status_code == 204
 
 
-def test_heartbeat_endpoint_records_a_heartbeat(client):
-    monitor.last_heartbeat = None
+def test_heartbeat_endpoint_records_a_heartbeat(client, monkeypatch):
+    monkeypatch.setattr(monitor, "last_heartbeat", None)
     client.post("/heartbeat")
     assert monitor.last_heartbeat is not None
 
