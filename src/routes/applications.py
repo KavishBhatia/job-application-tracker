@@ -81,6 +81,7 @@ def create_application(
     total_rounds: str = Form(""),
     current_round: str = Form(""),
     feedback: str = Form(""),
+    date_applied: str = Form(""),
 ):
     db.create_application(
         company=company.strip(),
@@ -91,6 +92,7 @@ def create_application(
         total_rounds=parse_optional_int(total_rounds),
         current_round=parse_optional_int(current_round),
         feedback=feedback.strip() or None,
+        date_applied=date_applied.strip() or None,
     )
     return RedirectResponse(url="/", status_code=303)
 

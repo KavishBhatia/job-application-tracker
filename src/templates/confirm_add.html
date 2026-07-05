@@ -14,8 +14,8 @@
         <label for="role">Role:</label><br>
         <input type="text" id="role" name="role" value="{{ role }}" required><br>
 
-        <label>Date applied:</label><br>
-        <span class="field-static">{{ today }}</span><br>
+        <label for="date_applied">Date applied:</label><br>
+        <input type="date" id="date_applied" name="date_applied" value="{{ today }}" required><br>
 
         <label for="status">Status:</label><br>
         <select id="status" name="status" data-status="{{ default_status }}" onchange="this.dataset.status = this.value">

@@ -86,6 +86,35 @@ def test_create_application_blank_rounds_and_feedback_default_to_none(client):
     assert row["feedback"] is None
 
 
+def test_create_application_with_custom_date_applied(client):
+    response = client.post(
+        "/applications",
+        data={
+            "company": "Acme",
+            "role": "Backend Engineer",
+            "status": "Applied",
+            "date_applied": "2020-05-05",
+        },
+        follow_redirects=True,
+    )
+    assert response.status_code == 200
+    row = db.list_applications()[0]
+    assert row["date_applied"] == "2020-05-05"
+
+
+def test_create_application_blank_date_applied_defaults_to_today(client):
+    import datetime
+
+    response = client.post(
+        "/applications",
+        data={"company": "Acme", "role": "Backend Engineer", "status": "Applied"},
+        follow_redirects=True,
+    )
+    assert response.status_code == 200
+    row = db.list_applications()[0]
+    assert row["date_applied"] == datetime.date.today().isoformat()
+
+
 def test_status_dropdown_offers_exactly_five_options(client):
     client.post("/applications", data={"company": "Acme", "role": "Engineer"}, follow_redirects=True)
     response = client.get("/")

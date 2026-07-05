@@ -95,12 +95,13 @@ def create_application(
     total_rounds: Optional[int] = None,
     current_round: Optional[int] = None,
     feedback: Optional[str] = None,
+    date_applied: Optional[str] = None,
 ) -> int:
-    today = datetime.date.today().isoformat()
+    date_applied = date_applied or datetime.date.today().isoformat()
     return _insert(
         company=company,
         role=role,
-        date_applied=today,
+        date_applied=date_applied,
         status=status,
         job_post_url=job_post_url,
         source_text=source_text,
@@ -113,7 +114,22 @@ def create_application(
 def list_applications() -> list[dict]:
     conn = get_connection()
     try:
-        rows = conn.execute("SELECT * FROM applications ORDER BY id").fetchall()
+        rows = conn.execute(
+            """
+            SELECT * FROM applications
+            ORDER BY
+                CASE status
+                    WHEN 'Interviewing' THEN 1
+                    WHEN 'Applied' THEN 2
+                    WHEN 'Rejected' THEN 3
+                    WHEN 'Offer' THEN 4
+                    WHEN 'Withdrawn' THEN 5
+                    ELSE 6
+                END,
+                date_applied DESC,
+                id DESC
+            """
+        ).fetchall()
         return [dict(row) for row in rows]
     finally:
         conn.close()

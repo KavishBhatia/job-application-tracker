@@ -21,11 +21,52 @@ def test_create_and_list_application(temp_db):
     assert apps[0]["date_applied"] == datetime.date.today().isoformat()
 
 
-def test_create_application_multiple_ordered_by_id(temp_db):
-    id1 = db.create_application(company="A", role="R1")
-    id2 = db.create_application(company="B", role="R2")
+def test_create_application_with_explicit_date_applied(temp_db):
+    db.create_application(company="Acme", role="Engineer", date_applied="2020-05-05")
+    assert db.list_applications()[0]["date_applied"] == "2020-05-05"
+
+
+def test_create_application_without_date_applied_defaults_to_today(temp_db):
+    db.create_application(company="Acme", role="Engineer")
+    assert db.list_applications()[0]["date_applied"] == datetime.date.today().isoformat()
+
+
+def test_list_applications_ordered_by_date_applied_descending(temp_db):
+    db.create_application(company="Oldest", role="R1", date_applied="2020-01-01")
+    db.create_application(company="Newest", role="R2", date_applied="2024-06-15")
+    db.create_application(company="Middle", role="R3", date_applied="2022-03-10")
     apps = db.list_applications()
-    assert [a["id"] for a in apps] == [id1, id2]
+    assert [a["company"] for a in apps] == ["Newest", "Middle", "Oldest"]
+
+
+def test_list_applications_same_date_ordered_by_most_recently_added_first(temp_db):
+    id1 = db.create_application(company="First", role="R1", date_applied="2024-01-01")
+    id2 = db.create_application(company="Second", role="R2", date_applied="2024-01-01")
+    apps = db.list_applications()
+    assert [a["id"] for a in apps] == [id2, id1]
+
+
+def test_list_applications_grouped_by_status_priority(temp_db):
+    db.create_application(company="Withdrawn Co", role="R1", status="Withdrawn", date_applied="2024-01-01")
+    db.create_application(company="Offer Co", role="R2", status="Offer", date_applied="2024-01-01")
+    db.create_application(company="Rejected Co", role="R3", status="Rejected", date_applied="2024-01-01")
+    db.create_application(company="Applied Co", role="R4", status="Applied", date_applied="2024-01-01")
+    db.create_application(company="Interviewing Co", role="R5", status="Interviewing", date_applied="2024-01-01")
+    apps = db.list_applications()
+    assert [a["company"] for a in apps] == [
+        "Interviewing Co",
+        "Applied Co",
+        "Rejected Co",
+        "Offer Co",
+        "Withdrawn Co",
+    ]
+
+
+def test_list_applications_status_priority_outranks_date(temp_db):
+    db.create_application(company="Applied Newer", role="R1", status="Applied", date_applied="2024-06-01")
+    db.create_application(company="Interviewing Older", role="R2", status="Interviewing", date_applied="2020-01-01")
+    apps = db.list_applications()
+    assert [a["company"] for a in apps] == ["Interviewing Older", "Applied Newer"]
 
 
 def test_create_application_with_job_post_url(temp_db):

@@ -46,7 +46,9 @@
                     <th>Date Applied</th>
                     <th>Status</th>
                     <th>Job Posting</th>
-                    <th>Rounds / Feedback</th>
+                    <th>Total Rounds</th>
+                    <th>Current Round</th>
+                    <th>Feedback</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,12 +72,17 @@
                         {% endif %}
                     </td>
                     <td>
-                        <form method="post" action="/applications/{{ application.id }}/details" class="details-form">
-                            <input type="number" name="total_rounds" min="0" placeholder="Total" value="{{ application.total_rounds if application.total_rounds is not none else '' }}">
-                            <input type="number" name="current_round" min="0" placeholder="Current" value="{{ application.current_round if application.current_round is not none else '' }}">
-                            <input type="text" name="feedback" placeholder="Feedback" value="{{ application.feedback or '' }}">
-                            <button type="submit" class="button--secondary">Save</button>
-                        </form>
+                        <form id="details-{{ application.id }}" method="post" action="/applications/{{ application.id }}/details"></form>
+                        <input type="number" form="details-{{ application.id }}" name="total_rounds" min="0" value="{{ application.total_rounds if application.total_rounds is not none else '' }}">
+                    </td>
+                    <td>
+                        <input type="number" form="details-{{ application.id }}" name="current_round" min="0" value="{{ application.current_round if application.current_round is not none else '' }}">
+                    </td>
+                    <td>
+                        <div class="feedback-cell">
+                            <input type="text" form="details-{{ application.id }}" name="feedback" value="{{ application.feedback or '' }}">
+                            <button type="submit" form="details-{{ application.id }}" class="button--secondary">Save</button>
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
